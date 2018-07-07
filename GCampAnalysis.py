@@ -46,7 +46,7 @@ def CalciumConc(loc, name):
     #==========================
     #Assumptions: Flagella starts at the beginning of the image, and ends when the brightness falls below a certain threshold
     #Add all entries in each column
-    minvalue = 13 #Set threshold for being counted as a point
+    minvalue = 12 #Set threshold for being counted as a point
 
     colsums =[]
     for col in range(0, im.shape[1]):
@@ -58,13 +58,15 @@ def CalciumConc(loc, name):
     #Find point from the end where value exceeds threshold
     flapx = int(len(colsums))-1
 
-    print("Colsums: ", colsums, "\n")
-    while(colsums[flapx] < minvalue):
+    # print("Colsums: ", colsums, "\n")
+    while(colsums[flapx] < minvalue and flapx > 0):
         flapx = flapx - 1
+    if(flapx == 0):
+        flapx = int(len(colsums))-1
 
     #i is now the nth pixel where brightness drops off (where the flagella ends)
     flalength = flapx * px_size
-    print("Length: ", flalength, "\n")
+    # print("Length: ", flalength, "\n")
 
     # plt.figure()
     # plt.plot(colsums)
@@ -84,10 +86,10 @@ def CalciumConc(loc, name):
             total = total + im[row][col]
         rowsums.append(total/flalength)
 
-    print("Rowsums: ", rowsums, "\n")
-    plt.figure()
-    plt.plot(rowsums)
-    plt.show()
+    # print("Rowsums: ", rowsums, "\n")
+    # plt.figure()
+    # plt.plot(rowsums)
+    # plt.show()
 
 
     #============
@@ -122,7 +124,7 @@ def CalciumConc(loc, name):
 
     avgPeakArea = totalintensity/len(peaks)
     capertime = totalintensity/len(im) #total calcium divided by time
-    print("AvgPeakArea: ", avgPeakArea, "\n")
+    # print("AvgPeakArea: ", avgPeakArea, "\n")
 
 
     #===========
